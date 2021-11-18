@@ -23,7 +23,7 @@ class UserService {
 
   async updateById (obj) {
     const { user_name, id, password } = obj
-    console.log(password,'12');
+    console.log(password, '12');
     const opt = { id }
     const newOpt = {}
     user_name && Object.assign(newOpt, { user_name })
@@ -31,13 +31,13 @@ class UserService {
     password && Object.assign(newOpt, { password })
 
     try {
-      const res = await User.update(newOpt,{where:opt})
-      console.log(res,'res');
+      const res = await User.update(newOpt, { where: opt })
+      console.log(res, 'res');
       return res
     } catch (error) {
       console.error(error)
     }
-    
+
   }
 }
 

@@ -10,7 +10,7 @@ const app = new Koa()
 
 
 app.use(KoaBody({
-    multipart: true, 
+    multipart: true,
 }))
 
 

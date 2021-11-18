@@ -48,7 +48,7 @@ const bcryptPassword = async (ctx, next) => {
 
   console.log(typeof ctx.request.body);
 
-  ctx.request.body = JSON.stringify({...JSON.parse(ctx.request.body),password:hash});
+  ctx.request.body = JSON.stringify({ ...JSON.parse(ctx.request.body), password: hash });
 
   await next();
 };
@@ -57,7 +57,7 @@ const vertifyPassword = async (ctx, next) => {
   const { user_name, password } = (ctx.request.query);
   try {
     const res = await getUserInfo({ user_name });
-    console.log(res.user_name,'res');
+    console.log(res.user_name, 'res');
     ctx.state.user = res
     if (!res.user_name) {
       ctx.app.emit(

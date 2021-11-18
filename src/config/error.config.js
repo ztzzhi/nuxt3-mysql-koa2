@@ -1,5 +1,5 @@
 // 错误集中处 理
-module.exports = (err,ctx)=>{
+module.exports = (err, ctx) => {
   let status = 400
   switch (err.code) {
     case 400:

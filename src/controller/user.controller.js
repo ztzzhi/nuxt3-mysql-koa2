@@ -1,4 +1,4 @@
-const { createUser, getUserInfo ,updateById} = require("../service/user.service");
+const { createUser, getUserInfo, updateById } = require("../service/user.service");
 
 const jwt = require('jsonwebtoken');
 
@@ -50,48 +50,48 @@ class UserController {
   }
   // 用户登录
   async login (ctx, next) {
-    if(ctx.state.user.id){
+    if (ctx.state.user.id) {
       ctx.body = {
         code: 200,
         msg: "用户登录成功",
         result: {
-          user_name : ctx.state.user.user_name,
+          user_name: ctx.state.user.user_name,
           token: jwt.sign(ctx.state.user, JWTSECRET, { expiresIn: '1d' }),
-          user_id:ctx.state.user.id,
+          user_id: ctx.state.user.id,
         }
       }
-    }else{
-      ctx.app.emit('error',{
+    } else {
+      ctx.app.emit('error', {
         code: 500,
         msg: "用户登录失败",
         result: ''
-      },ctx)
+      }, ctx)
     }
   }
 
   // 密码修改
-  async changePwd(ctx, next) {
+  async changePwd (ctx, next) {
     try {
       const res = await updateById(JSON.parse(ctx.request.body))
-      if(res[0]==1){
+      if (res[0] == 1) {
         ctx.body = {
-          code:200,
-          msg:'密码信息修改成功',
-          result:''
+          code: 200,
+          msg: '密码信息修改成功',
+          result: ''
         }
-      }else{
-        ctx.app.emit('error',{
+      } else {
+        ctx.app.emit('error', {
           code: 500,
           msg: "用户信息修改失败",
           result: ''
-        },ctx)
+        }, ctx)
       }
     } catch (error) {
-      ctx.app.emit('error',{
-        code:500,
-        msg:'密码信息修改失败',
-        result:''
-      },ctx)
+      ctx.app.emit('error', {
+        code: 500,
+        msg: '密码信息修改失败',
+        result: ''
+      }, ctx)
     }
   }
 }
