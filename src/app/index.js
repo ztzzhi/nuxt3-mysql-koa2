@@ -6,13 +6,15 @@ const KoaBody = require('koa-body')
 
 const router = require('../router')
 
+const sslify = require('koa-sslify').default
+
 const app = new Koa()
 
+app.use(sslify())
 
 app.use(KoaBody({
     multipart: true,
 }))
-
 
 
 app.use(router.routes())
