@@ -20,7 +20,7 @@ const V1User = seq.define('V1User', {
         allowNull:false,
         defaultValue:0,
         comment:'账户'
-    }
+    },
 })
 
 // V1User.sync({force:true})
