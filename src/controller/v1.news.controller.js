@@ -11,7 +11,7 @@ class V1UserController {
             ctx.body = {
                 code:200,
                 msg:'查询成功',
-                datas: data.newslist
+                result: data.newslist
             }
         } else {
             return ctx.app.emit(
