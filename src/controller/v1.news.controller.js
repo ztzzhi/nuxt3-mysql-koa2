@@ -2,7 +2,7 @@
 const axios = require('axios')
 const { APIKEY } = require('../config/config.default')
 const { getAllNewsType } = require('../service/v1.news.service')
-class V1UserController {
+class V1NewsController {
     async v1GetNewsList (ctx, next) {
         let {page=1,num=10} = ctx.query
         let url = ctx.state.newsUrl + '?key=' + APIKEY + '&page=' + page + '&num=' + num 
@@ -36,4 +36,4 @@ class V1UserController {
     }
 }
 
-module.exports = new V1UserController()
+module.exports = new V1NewsController()
