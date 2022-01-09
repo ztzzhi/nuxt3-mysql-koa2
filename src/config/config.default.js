@@ -10,7 +10,9 @@ let config = {
     JWTSECRET: 'ztz',
     APPID:'wx6108bf2c6ba79156',
     SECRET:'13a41762fa0d21dec0aaeb729040352a',
-    APIKEY:'078b65ada7136beb6a432a3499b71f43'
+    APIKEY:'078b65ada7136beb6a432a3499b71f43',
+    TKAPPSECRET:'3a3f0c5ea999e74c240adb29a8a16a8e',
+    TKAPPKEY:'61d6713871dac'
 }
 
 module.exports = config
