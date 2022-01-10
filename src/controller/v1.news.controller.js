@@ -27,7 +27,6 @@ class V1NewsController {
     }
     async v1GetNewsListTypeALL (ctx, next) {
         let result = await getAllNewsType()
-        console.log(result,'result');
         return ctx.body = {
             code:200,
             msg:'查询成功',

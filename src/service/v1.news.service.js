@@ -16,7 +16,6 @@ class V1UserService {
     async getAllNewsType(){
         try {
             const result = await V1NewsType.findAll()
-            console.log(result,'1');
             return result ? result : null;
         } catch (error) {
             console.log(error);
