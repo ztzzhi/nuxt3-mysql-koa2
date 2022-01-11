@@ -203,11 +203,12 @@ class V1CouponsController {
         }
     }
     async v1GetHotGoodsList (ctx, next) {
-        const {page=1,limit=15,section=2,cids=''} = ctx.query
-        let res = await TKAPP.request('https://openapi.dataoke.com/api/goods/explosive-goods-list', {
+        const {page=1,limit=15,cids=''} = ctx.query
+        let res = await TKAPP.request('https://openapi.dataoke.com/api/goods/get-goods-list', {
             method: 'GET',
-            form: { version: "v1.0.0" ,pageId:page,pageSize:limit,PriceCid:section,cids:cids}
+            form: { version: "v1.0.0" ,pageId:page,pageSize:limit,cids:cids}
         })
+        console.log(res);
         if (res.code == 0) {
             ctx.body = {
                 code: 200,
