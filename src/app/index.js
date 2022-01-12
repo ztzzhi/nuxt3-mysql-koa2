@@ -8,13 +8,31 @@ const router = require('../router')
 
 const sslify = require('koa-sslify').default
 
+const statics = require('koa-static')
+
+const path = require('path')
+
 const app = new Koa()
+
+
 
 app.use(sslify())
 
+
 app.use(KoaBody({
     multipart: true,
+    formidable: {
+        // 上传目录
+        // uploadDir: path.join(__dirname, '../static'),
+        // 保留文件扩展名
+        keepExtensions: true,
+        maxFieldsSize: 200 * 1024 * 1024,
+    }
 }))
+
+app.use(statics(
+    path.join(__dirname, '../static')
+))
 
 
 app.use(router.routes())
