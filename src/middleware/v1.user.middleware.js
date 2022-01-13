@@ -7,12 +7,15 @@ const jwt = require('jsonwebtoken');
 const { JWTSECRET } = require("../config/config.default");
 
 const getOpenid = async (ctx, next) => {
-    const { code } = ctx.request.body
+    const { code ,name} = ctx.request.body
+    console.log(name,'name');
     let result = await axios({
         method: 'get',
         url: `https://api.weixin.qq.com/sns/jscode2session?appid=${APPID}&secret=${SECRET}&js_code=${code}&grant_type=authorization_code`
     })
     ctx.state.v1user = result.data
+    ctx.state.v1user.user_name = name
+    console.log(ctx.state.v1user,'ctx.state.v1user');
     await next()
 }
 
@@ -20,7 +23,7 @@ const hasUserInfo = async (ctx, next) => {
     const res = await getUserInfoByOpenid(ctx.state.v1user.openid)
     if (!res) {
         // 说明数据库没有该用户信息
-        await UserCreate(ctx.state.v1user.openid)
+        await UserCreate(ctx.state.v1user.openid,ctx.state.v1user.user_name)
     }
     ctx.state.v1user = {
         session_key: ctx.state.v1user.session_key,

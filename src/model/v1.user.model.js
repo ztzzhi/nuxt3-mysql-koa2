@@ -21,6 +21,12 @@ const V1User = seq.define('V1User', {
         defaultValue:0,
         comment:'账户'
     },
+    user_name:{
+        type:DataTypes.STRING,
+        allowNull:true,
+        defaultValue:null,
+        comment:'用户名'
+    }
 })
 
 // V1User.sync({force:true})

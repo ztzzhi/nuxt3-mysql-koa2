@@ -14,10 +14,11 @@ class V1UserService {
         }
     }
 
-    async UserCreate(openid){
+    async UserCreate(openid,user_name){
         try {
             const res = await V1User.create({
-                openid
+                openid,
+                user_name
             })
             return res
         } catch (error) {
