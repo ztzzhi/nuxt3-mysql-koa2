@@ -10,6 +10,8 @@ const sslify = require('koa-sslify').default
 
 const statics = require('koa-static')
 
+const cors = require('koa2-cors')
+
 const path = require('path')
 
 const app = new Koa()
@@ -30,9 +32,12 @@ app.use(KoaBody({
     }
 }))
 
+
 app.use(statics(
     path.join(__dirname, '../static')
 ))
+
+app.use(cors())
 
 
 app.use(router.routes())
