@@ -45,7 +45,6 @@ class V1BigScreenController {
         }
     }
     async v1GetArticleData (ctx, next) {
-        let id = ctx.query.id
         let { data } = await axios.get("https://c.m.163.com/ug/api/wuhan/app/article/search-list")
         if (data.code == 10000) {
             ctx.body = {
