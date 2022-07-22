@@ -6,13 +6,21 @@ const https = require('https')
 
 const path = require('path')
 
+const Ws = require('./app/ws')
+
 const options = {
-    key: fs.readFileSync(path.resolve(__dirname,'./ssl/myutils.cn.key')),
-    cert: fs.readFileSync(path.resolve(__dirname,'./ssl/myutils.cn.pem'))
+    key: fs.readFileSync(path.resolve(__dirname, './ssl/myutils.cn.key')),
+    cert: fs.readFileSync(path.resolve(__dirname, './ssl/myutils.cn.pem'))
 }
 
 const app = require('./app/index')
 
-https.createServer(options,app.callback()).listen(APP_PORT,()=>{
+const server = https.createServer(options, app.callback())
+
+Ws.init(server)
+
+console.log(Ws);
+
+server.listen(APP_PORT, () => {
     console.log(`service is running at https://localhost:${APP_PORT}`)
 })
