@@ -72,6 +72,9 @@ class ws {
         messageList.push(newMsg)
         let sendObj = { "message": "连接成功", "retCode": 200, messageList }
         ws.send(JSON.stringify(sendObj))
+        this.ws.clients.forEach((client) => {
+          client.send(JSON.stringify(sendObj));
+        })
       })
       if (!(request.url.includes('?id='))) {
         return ws.close();
