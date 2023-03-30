@@ -60,11 +60,15 @@ const messageList = [
 ]
 
 class ws {
-  static online = 0 // 在线连接
-  static ws = WebSocket.Server //默认实例
-  static init (server) {
+  constructor(){
+    this.online = 0
+    this.ws = null
+  }
+  // static online = 0 // 在线连接
+  // static ws = WebSocket.Server //默认实例
+  init (server) {
     // 创建实例
-    this.ws = new WebSocket.Server({ port: 9000 });
+    this.ws = new WebSocket.Server({port: 9000 });
     this.ws.on('connection', async (ws, request) => {
       ws.on('message', async (msg) => {
         console.log('客户端发送数据给服务端了: ' + msg)
@@ -101,7 +105,7 @@ class ws {
     });
   }
   // 发送客户端数据
-  static sendToCliect (Data) {
+  sendToCliect (Data) {
     let iskeep = false // 加个变量做下发成功判断
     if (!(this.ws instanceof WebSocket.Server)) {
       return iskeep;
