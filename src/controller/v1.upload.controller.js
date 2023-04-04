@@ -8,7 +8,10 @@ class UserController {
     const file = ctx.request.files.file; // 上传的文件在ctx.request.files.file
     // 创建可读流
     const reader = fs.createReadStream(file.path);
+
     if (file.name.indexOf("xls") > -1) {
+      console.log(13);
+
       if (file.name.indexOf("实际值") > -1) {
         if (!fs.existsSync(path.join(__dirname, '../static/excle/1'))) {
           fs.mkdirSync(path.join(__dirname, '../static/excle/1'))
@@ -61,7 +64,7 @@ class UserController {
       return ctx.body = {
         code: 200,
         msg: '上传成功',
-        result: `https://1.117.155.84:7001/${newFilename}`
+        result: `http://localhost:7001/${newFilename}`
       };
     }
 

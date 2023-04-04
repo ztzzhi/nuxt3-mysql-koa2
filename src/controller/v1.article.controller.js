@@ -1,85 +1,37 @@
-
-const axios = require('axios')
-class V1BigScreenController {
-    async v1GetAllData (ctx, next) {
-        let { data } = await axios.get("https://c.m.163.com/ug/api/wuhan/app/data/list-total?t" +
-            new Date().getTime())
-        if (data.code == 10000) {
-            ctx.body = {
-                code: 200,
-                msg: '查询成功',
-                result: data.data
-            }
-        } else {
-            return ctx.app.emit(
+const { createArticle } = require("../service/v1.article.service");
+class V1ArticleController {
+    async v1AddArticle (ctx, next) {
+        const { title, content, img, tag, isTop } = (ctx.request.body);
+        if (!title || !content || !img || !tag) {
+            console.error("参数校验错误");
+            ctx.status = 400;
+            ctx.app.emit(
                 "error",
                 {
-                    code: 500,
-                    msg: "服务器异常",
+                    code: 400,
+                    msg: "参数校验错误",
                     result: "",
                 },
                 ctx
             );
+            return;
         }
-    }
-    async v1GetPolicyData (ctx, next) {
-        let id = ctx.query.id
-        let { data } = await axios.get("https://c.m.163.com/ug/api/wuhan/app/manage/track-map?cityId=" + id)
-        console.log(data);
-        if (data.code == 10000) {
-            ctx.body = {
-                code: 200,
-                msg: '查询成功',
-                result: data
-            }
-        } else {
-            return ctx.app.emit(
-                "error",
-                {
-                    code: 500,
-                    msg: "服务器异常",
-                    result: "",
-                },
-                ctx
-            );
-        }
-    }
-    async v1GetArticleData (ctx, next) {
-        let { data } = await axios.get("https://c.m.163.com/ug/api/wuhan/app/article/search-list")
-        if (data.code == 10000) {
-            ctx.body = {
-                code: 200,
-                msg: '查询成功',
-                result: data.data
-            }
-        } else {
-            return ctx.app.emit(
-                "error",
-                {
-                    code: 500,
-                    msg: "服务器异常",
-                    result: "",
-                },
-                ctx
-            );
-        }
-    }
-    async v1GetAddress (ctx, next) {
         try {
-            let res = await axios.get("https://restapi.amap.com/v3/geocode/geo?key=2909a1096911a9dd21daa913c86bb677&address=hangzhou")
+            const res = await createArticle(title, content, img, tag, isTop);
+            console.log(res, "res");
             ctx.body = {
                 code: 200,
-                msg: '查询成功',
-                result: res.data.geocodes
-            }
+                msg: "创建成功",
+                result: {},
+            };
         } catch (error) {
             ctx.body = {
                 code: 500,
-                msg: '查询失败',
-                result: error
-            }
+                msg: "服务器错误",
+                result: "",
+            };
         }
     }
 }
 
-module.exports = new V1BigScreenController()
+module.exports = new V1ArticleController()

@@ -1,4 +1,4 @@
-const V1User = require('../model/v1.user.model')
+const V1User = require('../model/v1.article.model')
 
 class V1UserService {
     async getUserInfoByOpenid(openid){

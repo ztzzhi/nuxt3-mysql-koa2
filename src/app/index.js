@@ -18,7 +18,7 @@ const app = new Koa()
 
 
 
-app.use(sslify())
+// app.use(sslify()) https才开启
 
 
 app.use(KoaBody({

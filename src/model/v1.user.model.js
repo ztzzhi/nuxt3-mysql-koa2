@@ -2,57 +2,33 @@ const { DataTypes } = require('sequelize')
 
 const seq = require('../config/db')
 
-const V1article = seq.define('V1article', {
-    title: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: "",
-        comment: '文章标题'
+const V1User = seq.define('V1User', {
+    openid: {
+        type:DataTypes.STRING,
+        allowNull:false,
+        unique:true,
+        comment:'用户唯一标识'
     },
-    content: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: "",
-        comment: '文章内容'
+    is_regesiter:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue:0,
+        comment:'是否注册'
     },
-    img: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: "",
-        comment: '图片地址'
+    count:{
+        type:DataTypes.DOUBLE,
+        allowNull:false,
+        defaultValue:0,
+        comment:'账户'
     },
-    isTop: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-        defaultValue: false,
-        comment: '是否置顶'
-    },
-    viewNum: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 0,
-        comment: '阅读量'
-    },
-    praiseNum: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 0,
-        comment: '点赞量'
-    },
-    commentNum: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 0,
-        comment: '评论量'
-    },
-    tag: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: "",
-        comment: '文字类目'
+    user_name:{
+        type:DataTypes.STRING,
+        allowNull:true,
+        defaultValue:null,
+        comment:'用户名'
     }
 })
 
-// V1article.sync({force:true})
-V1article.sync({})
-module.exports = V1article
+// V1User.sync({force:true})
+V1User.sync({})
+module.exports = V1User
