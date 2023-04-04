@@ -14,10 +14,38 @@ class V1ArticleService {
         }
     }
 
-    async createArticle (title, content, img, tag, isTop) {
+    async createArticle (title, content, img, tag, isTop, desc) {
         try {
             const res = await V1article.create({
-                title, content, img, tag, isTop
+                title, content, img, tag, isTop, desc
+            })
+            return res
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async selectArticle (page, page_size) {
+        try {
+            const res = await V1article.findAndCountAll({
+                where: {
+
+                },
+                offset: (page * 1 - 1) * page_size,
+                limit: page_size * 1
+            })
+            return res
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async selectArticleById (id) {
+        try {
+            const res = await V1article.findOne({
+                where: {
+                    id: id
+                },
             })
             return res
         } catch (error) {

@@ -10,10 +10,16 @@ const V1article = seq.define('V1article', {
         comment: '文章标题'
     },
     content: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
         defaultValue: "",
         comment: '文章内容'
+    },
+    desc: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "",
+        comment: '文章摘要'
     },
     img: {
         type: DataTypes.STRING,
@@ -25,7 +31,7 @@ const V1article = seq.define('V1article', {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: "",
-        comment: '文字类目'
+        comment: '文字分类'
     },
     isTop: {
         type: DataTypes.BOOLEAN,
