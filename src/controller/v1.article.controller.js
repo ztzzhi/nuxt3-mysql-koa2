@@ -1,4 +1,4 @@
-const { createArticle, selectArticle, selectArticleById } = require("../service/v1.article.service");
+const { createArticle, selectArticle, selectArticleById ,selectArticleByKeys} = require("../service/v1.article.service");
 class V1ArticleController {
     async v1AddArticle (ctx, next) {
         const { title, content, img, tag, isTop, desc } = (ctx.request.body);
@@ -93,6 +93,39 @@ class V1ArticleController {
                 result: {
                     ...res.dataValues,
                 },
+            };
+        } catch (error) {
+            ctx.body = {
+                code: 500,
+                msg: "服务器错误",
+                result: "",
+            };
+        }
+    }
+
+    async v1SearchArticle (ctx, next) {
+        const { keyword } = (ctx.request.query);
+        if (!keyword) {
+            console.error("参数校验错误");
+            ctx.status = 500;
+            ctx.app.emit(
+                "error",
+                {
+                    code: 500,
+                    msg: "参数校验错误",
+                    result: "",
+                },
+                ctx
+            );
+            return;
+        }
+        try {
+            const res = await selectArticleByKeys(keyword);
+            console.log(res, "res");
+            ctx.body = {
+                code: 200,
+                msg: "创建成功",
+                result: res
             };
         } catch (error) {
             ctx.body = {

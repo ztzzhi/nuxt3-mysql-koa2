@@ -1,5 +1,5 @@
 const V1article = require('../model/v1.article.model')
-
+const { Op } = require("sequelize");
 class V1ArticleService {
     async articleFindOne (openid) {
         try {
@@ -31,6 +31,7 @@ class V1ArticleService {
                 where: {
 
                 },
+                order: [["isTop", 'DESC']],
                 offset: (page * 1 - 1) * page_size,
                 limit: page_size * 1
             })
@@ -45,6 +46,30 @@ class V1ArticleService {
             const res = await V1article.findOne({
                 where: {
                     id: id
+                },
+            })
+            return res
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async selectArticleByKeys (keyword) {
+        try {
+            const res = await V1article.findAll({
+                where: {
+                    [Op.or]: [
+                        {
+                            title: {
+                                [Op.like]: `%${keyword}%`
+                            }
+                        },
+                        {
+                            desc: {
+                                [Op.like]: `%${keyword}%`
+                            }
+                        }
+                    ]
                 },
             })
             return res
