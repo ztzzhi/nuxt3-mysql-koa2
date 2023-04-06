@@ -64,7 +64,7 @@ class UserController {
       return ctx.body = {
         code: 200,
         msg: '上传成功',
-        result: `http://localhost:7001/${newFilename}`
+        result: `http://180.76.121.2:7001/${newFilename}`
       };
     }
 
