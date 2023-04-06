@@ -26,7 +26,7 @@ class UserController {
       console.log(res, "res");
       ctx.body = {
         code: 200,
-        msg: "创建成功",
+        msg: "操作成功",
         result: {
           user_name: res.user_name,
         },

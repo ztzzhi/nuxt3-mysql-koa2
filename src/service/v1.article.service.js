@@ -78,6 +78,80 @@ class V1ArticleService {
         }
     }
 
+    async selectArticleStatistics () {
+        try {
+            const articleNum = await V1article.count()
+            const praiseNum = await V1article.sum('praiseNum')
+            const viewNum = await V1article.sum('viewNum')
+            return {
+                articleNum,
+                praiseNum,
+                viewNum
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async changeArticlev1Praise (id, isReduce) {
+        try {
+            const item = await V1article.findOne({
+                where: {
+                    id
+                }
+            })
+
+            let praiseNum = 0
+            if (!isReduce) {
+                praiseNum = (item.praiseNum || 0) + 1
+            } else {
+                praiseNum = (item.praiseNum || 0) - 1
+            }
+
+            await V1article.update({ praiseNum: praiseNum }, {
+                where: { id }
+            })
+            return ''
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async changeArticlev1View (id, isReduce) {
+        try {
+            const item = await V1article.findOne({
+                where: {
+                    id
+                }
+            })
+
+            let viewNum = item.viewNum + 1
+
+            await V1article.update({ viewNum: viewNum }, {
+                where: { id }
+            })
+            return ''
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getArticlePraiseNumById (id) {
+        try {
+            const item = await V1article.findOne({
+                where: {
+                    id
+                }
+            })
+            return item.praiseNum
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
 }
 

@@ -1,4 +1,4 @@
-const { createArticle, selectArticle, selectArticleById ,selectArticleByKeys} = require("../service/v1.article.service");
+const { createArticle, selectArticle, selectArticleById, selectArticleByKeys, selectArticleStatistics, changeArticlev1Praise, changeArticlev1View ,getArticlePraiseNumById} = require("../service/v1.article.service");
 class V1ArticleController {
     async v1AddArticle (ctx, next) {
         const { title, content, img, tag, isTop, desc } = (ctx.request.body);
@@ -21,7 +21,7 @@ class V1ArticleController {
             console.log(res, "res");
             ctx.body = {
                 code: 200,
-                msg: "创建成功",
+                msg: "操作成功",
                 result: {},
             };
         } catch (error) {
@@ -54,7 +54,7 @@ class V1ArticleController {
             console.log(res, "res");
             ctx.body = {
                 code: 200,
-                msg: "创建成功",
+                msg: "操作成功",
                 result: {
                     lists: res.rows,
                     total: Math.ceil(res.count / page_size)
@@ -89,7 +89,7 @@ class V1ArticleController {
             console.log(res, "res");
             ctx.body = {
                 code: 200,
-                msg: "创建成功",
+                msg: "操作成功",
                 result: {
                     ...res.dataValues,
                 },
@@ -124,7 +124,120 @@ class V1ArticleController {
             console.log(res, "res");
             ctx.body = {
                 code: 200,
-                msg: "创建成功",
+                msg: "操作成功",
+                result: res
+            };
+        } catch (error) {
+            ctx.body = {
+                code: 500,
+                msg: "服务器错误",
+                result: "",
+            };
+        }
+    }
+    async v1ArticleStatistics (ctx, next) {
+        try {
+            const res = await selectArticleStatistics();
+            console.log(res, "res");
+            ctx.body = {
+                code: 200,
+                msg: "操作成功",
+                result: res
+            };
+        } catch (error) {
+            ctx.body = {
+                code: 500,
+                msg: "服务器错误",
+                result: "",
+            };
+        }
+    }
+    async v1ArticlePraise (ctx, next) {
+        const { id, isReduce } = (ctx.request.body);
+        if (!id) {
+            console.error("参数校验错误");
+            ctx.status = 400;
+            ctx.app.emit(
+                "error",
+                {
+                    code: 400,
+                    msg: "参数校验错误",
+                    result: "",
+                },
+                ctx
+            );
+            return;
+        }
+        try {
+            const res = await changeArticlev1Praise(id, isReduce);
+            console.log(res, "res");
+            ctx.body = {
+                code: 200,
+                msg: "操作成功",
+                result: res
+            };
+        } catch (error) {
+            ctx.body = {
+                code: 500,
+                msg: "服务器错误",
+                result: "",
+            };
+        }
+    }
+    async v1ArticleView (ctx, next) {
+        const { id } = (ctx.request.body);
+        if (!id) {
+            console.error("参数校验错误");
+            ctx.status = 400;
+            ctx.app.emit(
+                "error",
+                {
+                    code: 400,
+                    msg: "参数校验错误",
+                    result: "",
+                },
+                ctx
+            );
+            return;
+        }
+        try {
+            const res = await changeArticlev1View(id);
+            console.log(res, "res");
+            ctx.body = {
+                code: 200,
+                msg: "操作成功",
+                result: res
+            };
+        } catch (error) {
+            ctx.body = {
+                code: 500,
+                msg: "服务器错误",
+                result: "",
+            };
+        }
+    }
+    async v1ArticlePraiseNum (ctx, next) {
+        const { id } = (ctx.request.query);
+        if (!id) {
+            console.error("参数校验错误");
+            ctx.status = 400;
+            ctx.app.emit(
+                "error",
+                {
+                    code: 400,
+                    msg: "参数校验错误",
+                    result: "",
+                },
+                ctx
+            );
+            return;
+        }
+        try {
+            const res = await getArticlePraiseNumById(id);
+            console.log(res, "res");
+            ctx.body = {
+                code: 200,
+                msg: "操作成功",
                 result: res
             };
         } catch (error) {
