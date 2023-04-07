@@ -20,7 +20,7 @@ https://github.com/ztzzhi/ztzzhi-nuxt3-vite-mysql-koa2
 # node版本 v16.14.0
 其他版本如若出现依赖安装失败等情况 请切换到该node版本进行依赖的安装
 
-
+# v1.upload.controller.js 上传图片地址请换成你的本地或者你的ip地址
 # 博客页面展示
 
 首页

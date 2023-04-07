@@ -9,65 +9,19 @@ class UserController {
     // 创建可读流
     const reader = fs.createReadStream(file.path);
 
-    if (file.name.indexOf("xls") > -1) {
-      console.log(13);
-
-      if (file.name.indexOf("实际值") > -1) {
-        if (!fs.existsSync(path.join(__dirname, '../static/excle/1'))) {
-          fs.mkdirSync(path.join(__dirname, '../static/excle/1'))
-        }
-        let res = fs.readdirSync(path.join(__dirname, '../static/excle/1'))
-        res.forEach(item => {
-          fs.unlinkSync(path.join(__dirname, '../static/excle/1/') + item)
-        })
-
-        // 修改文件的名称
-        var myDate = new Date();
-        var uploadPath = path.join(__dirname, '../static/excle/1') + `/${file.name}`;
-        //创建可写流
-        const upStream = fs.createWriteStream(uploadPath);
-        // 可读流通过管道写入可写流
-        reader.pipe(upStream);
-        return ctx.body = {
-          code: 200,
-          msg: 'excle上传成功',
-        };
-      } else {
-        if (!fs.existsSync(path.join(__dirname, '../static/excle/2'))) {
-          fs.mkdirSync(path.join(__dirname, '../static/excle/2'))
-        }
-        let res = fs.readdirSync(path.join(__dirname, '../static/excle/2'))
-        res.forEach(item => {
-          fs.unlinkSync(path.join(__dirname, '../static/excle/2/') + item)
-        })
-        // 修改文件的名称
-        var myDate = new Date();
-        var uploadPath = path.join(__dirname, '../static/excle/2') + `/${file.name}`;
-        //创建可写流
-        const upStream = fs.createWriteStream(uploadPath);
-        // 可读流通过管道写入可写流
-        reader.pipe(upStream);
-        return ctx.body = {
-          code: 200,
-          msg: 'excle上传成功',
-        };
-      }
-    } else {
-      // 修改文件的名称
-      var myDate = new Date();
-      var newFilename = myDate.getTime() + '.' + file.name.split('.')[1];
-      var uploadPath = path.join(__dirname, '../static/') + `/${newFilename}`;
-      //创建可写流
-      const upStream = fs.createWriteStream(uploadPath);
-      // 可读流通过管道写入可写流
-      reader.pipe(upStream);
-      return ctx.body = {
-        code: 200,
-        msg: '上传成功',
-        result: `http://180.76.121.2:7001/${newFilename}`
-      };
-    }
-
+    // 修改文件的名称
+    var myDate = new Date();
+    var newFilename = myDate.getTime() + '.' + file.name.split('.')[1];
+    var uploadPath = path.join(__dirname, '../static/') + `/${newFilename}`;
+    //创建可写流
+    const upStream = fs.createWriteStream(uploadPath);
+    // 可读流通过管道写入可写流
+    reader.pipe(upStream);
+    return ctx.body = {
+      code: 200,
+      msg: '上传成功',
+      result: `http://180.76.121.2:7001/${newFilename}` //换成本地（http://localhost:7001）或者线上你的ip:7001的地址 这是我的服务器地址 大家最好不要上传到我的服务器～
+    };
   }
 
   async getcalc (ctx, next) {
